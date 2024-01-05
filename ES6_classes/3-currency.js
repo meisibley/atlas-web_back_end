@@ -33,7 +33,6 @@ export default class Currency {
   }
 
   displayFullCurrency() {
-    let nameNcode = this._name + '(' + this._code + ')';
-    return nameNcode;
+    return `${this._name} (${this._code})`;
   }
 }
