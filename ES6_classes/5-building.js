@@ -3,7 +3,7 @@ export default class Building {
     if (typeof sqft !== 'number') {
       throw TypeError('sqft must be a number');
     }
-    if (!this.evacuationWarningMessage) {
+    if (!this.evacuationWarningMessage && !this.constructor !== Building) {
       throw new Error('Class extending Building must override evacuationWarningMessage');
     }
     this._sqft = sqft;
