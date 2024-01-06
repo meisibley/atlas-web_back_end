@@ -3,11 +3,11 @@ import Building from './5-building';
 export default class SkyHighBuilding extends Building {
   constructor(sqft, floors) {
     if (typeof sqft !== 'number') {
-      throw TypeError('Sqft must be number');
+      throw TypeError('Sqft must be a number');
     }
     super(sqft);
     if (typeof floors !== 'number') {
-      throw TypeError('Floors must be number');
+      throw TypeError('Floors must be a number');
     }
     this._floors = floors;
   }
