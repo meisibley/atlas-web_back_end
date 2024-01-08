@@ -8,12 +8,12 @@ export default function getListStudents() {
     firstName: 'James',
     id: 2,
     location: 'Columbia',
-  }
+  };
   const obj3 = {
     firstName: 'Serena',
     id: 5,
     location: 'San Francisco',
-  }
+  };
   const arr = [obj1, obj2, obj3];
   return arr;
 }
