@@ -1,9 +1,9 @@
+import getListStudentIds from './1-get_list_student_ids';
+
 export default function getStudentIdsSum(students) {
-  if (!Array.isArray(students)) {
-    return 0;
-  }
-  const sum = students.reduce(
-    (accumulator, currentValue) => accumulator + currentValue.id,
+  const idList = getStudentIds(students);
+  const sum = idList.reduce(
+    (accumulator, currentValue) => accumulator + currentValue
   );
   return sum;
 }
