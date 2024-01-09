@@ -5,8 +5,7 @@ export default function updateUniqueItems(groceryMap) {
 
   const updatedMap = groceryMap.forEach((name, quantity) => {
     if (quantity === 1) {
-      name = name;
-      quantity = 100;
+      groceryMap.set(name, 100);
     }
   });
   return updatedMap;
