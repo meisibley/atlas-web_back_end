@@ -1,5 +1,5 @@
 export default function updateUniqueItems(groceryMap) {
-  if (!(Map.isMap(groceryMap))) {
+  if (!(groceryMap instanceof Map)) {
     throw new Error('Cannot process');
   }
 
