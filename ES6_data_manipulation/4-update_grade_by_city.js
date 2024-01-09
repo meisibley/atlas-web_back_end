@@ -9,7 +9,7 @@ export default function updateStudentGradeByCity(students, city, newGrades) {
   const studentsUpdateGrades = studentsLocat.map((items) => {
     // to solve "Assignment to property of function parameter 'items' no-param-reassign"
     const items1 = items;
-    
+
     for (const nGrade of newGrades) {
       // if the student's id is in newGrade, update whose grade
       if (items1.id === nGrade.studentId) {
