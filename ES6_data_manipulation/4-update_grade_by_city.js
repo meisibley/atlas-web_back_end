@@ -5,13 +5,13 @@ export default function updateStudentGradeByCity(students, city, newGrades) {
   for (const elem of studentsLocat) {
     elem.grade = 'N/A';
   }
-  const studentsUpdateNewGrades = studentsLocat.map((item) => {
+  const studentsUpdateGrades = studentsLocat.map((items) => {
     for (const nGrade of newGrades) {
-      // if the student's id is in newGrade, update it's grade
-      if (item.id === nGrade.studentId) {
-        item.grade = nGrade.grade;
+      // if the student's id is in newGrade, update whose grade
+      if (items.id === nGrade.studentId) {
+        items.grade = nGrade.grade;
       }
     }
-    return studentsUpdateNewGrades;
+    return studentsUpdateGrades;
   });
 }
