@@ -8,20 +8,18 @@ of the delays should be in ascending order without using sort() because of
 concurrency."""
 
 
-import asyncio
-import random
 from typing import List
 
 
 wait_random = __import__('0-basic_async_syntax').wait_random
 
 
-async def wait_n(n: int, max_delay: int = 10) -> List[float]:
+async def wait_n(n: int, max_delay: int) -> List[float]:
     '''return the list of all the delays in ascending order'''
     delayList = []
     for i in range(n):
         delayList.append(await wait_random(max_delay))
-    
+
     '''sort the delayList'''
     sortedList = []
     for i in delayList:
