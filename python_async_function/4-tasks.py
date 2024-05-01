@@ -12,7 +12,7 @@ async def task_wait_n(n: int, max_delay: int) -> List[float]:
     delayList: List[float] = []
     for i in range(n):
         delayList.append(wait_random(max_delay))
-    
+
     doneList: List[float] = []
     for j in asyncio.as_completed(delayList):
         '''waiting for as_completed return'''
