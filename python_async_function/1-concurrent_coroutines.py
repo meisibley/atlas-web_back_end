@@ -20,14 +20,4 @@ async def wait_n(n: int, max_delay: int) -> List[float]:
     for i in range(n):
         delayList.append(await wait_random(max_delay))
 
-    '''sort the delayList'''
-    sortedList: List[float] = []
-    for i in delayList:
-        min = delayList[0]
-        for j in delayList:
-            if min > j:
-                min = j
-        sortedList.append(min)
-        delayList.remove(min)
-
-    return sortedList
+    return (sorted(delayList))
