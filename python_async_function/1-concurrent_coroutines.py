@@ -16,12 +16,12 @@ wait_random = __import__('0-basic_async_syntax').wait_random
 
 async def wait_n(n: int, max_delay: int) -> List[float]:
     '''return the list of all the delays in ascending order'''
-    delayList = []
+    delayList: List[float] = []
     for i in range(n):
         delayList.append(await wait_random(max_delay))
 
     '''sort the delayList'''
-    sortedList = []
+    sortedList: List[float] = []
     for i in delayList:
         min = delayList[0]
         for j in delayList:
