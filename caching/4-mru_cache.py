@@ -33,6 +33,7 @@ class MRUCache(BaseCaching):
             return
         self.cache_data[key] = item
 
+        self.cache_data.move_to_end(key)
         if len(self.cache_data) > BaseCaching.MAX_ITEMS:
             discard = list(self.cache_data.keys())[BaseCaching.MAX_ITEMS - 1]
             del self.cache_data[discard]
@@ -45,4 +46,5 @@ class MRUCache(BaseCaching):
         """
         if key is None or key not in self.cache_data:
             return None
+        self.cache_data.move_to_end(key)
         return self.cache_data[key]
