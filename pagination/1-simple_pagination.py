@@ -29,11 +29,13 @@ class Server:
         return self.__dataset
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
-        """ Use assert to verify that both arguments are integers greater than 0.
-        Use index_range to find the correct indexes to paginate the dataset correctly
-        and return the appropriate page of the dataset(i.e. the correct list of rows).
-        If the input arguments are out of range for the dataset, an empty list should
-        be returned.
+        """ Use assert to verify that both arguments are integers
+        greater than 0.
+        Use index_range to find the correct indexes to paginate the
+        dataset correctly and return the appropriate page of the dataset
+        (i.e. the correct list of rows).
+        If the input arguments are out of range for the dataset, an
+        empty list should be returned.
         """
         assert isinstance(page, int) and page > 0
         assert isinstance(page_size, int) and page_size > 0
@@ -43,4 +45,3 @@ class Server:
         if startIndex >= len(self.dataset()):
             return []
         return self.dataset()[startIndex:endIndex]
-    
