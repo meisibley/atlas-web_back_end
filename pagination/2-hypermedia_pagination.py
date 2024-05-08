@@ -11,7 +11,7 @@ total_pages: the total number of pages in the dataset as an integer
 """
 import csv
 import math
-from typing import List
+from typing import List, Dict, Any
 index_range = __import__('0-simple_helper_function').index_range
 
 
@@ -52,7 +52,7 @@ class Server:
             return []
         return self.dataset()[startIndex:endIndex]
 
-    def get_hyper(self, page: int = 1, page_size: int = 10):
+    def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict[str, Any]:
         """ returns a dictionary containing the following key-value pairs:
         page_size: the length of the returned dataset page
         page: the current page number
@@ -61,14 +61,14 @@ class Server:
         prev_page: number of the previous page, None if no previous page
         total_pages: the total number of pages in the dataset as an integer
         """
-        data = self.get_page(page, page_size)
-        total_page = math.ceil(len(self.dataset()) / page_size)
+        assert isinstance(page, int) and page > 0
+        assert isinstance(page_size, int) and page_size > 0
+        total_pages = math.floor(len(self.dataset()) / page_size)
 
-        return {
-            "page_size": page_size,
-            "page": page,
-            "data": data,
-            "next_page": None if page > total_page else page + 1,
-            "prev_page": None if page <= 1 else page - 1,
-            "total_page": total_page
-        }
+        return {'page_size': len(self.get_page(page, page_size)),
+                'page': page,
+                'data': self.get_page(page, page_size),
+                'next_page': page + 1 if page + 1 < total_pages else None,
+                'prev_page': page - 1 if page > 1 else None,
+                'total_pages': total_pages
+                }
