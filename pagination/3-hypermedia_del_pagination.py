@@ -44,14 +44,15 @@ class Server:
         index with a None default value and page_size with default value of 10
         index: the current start index of the return page. That is the index
         of the first item in the current page. For example if requesting page
-        3 with page_size 20, and no data was removed from the dataset, the 
+        3 with page_size 20, and no data was removed from the dataset, the
         current index should be 60.
         next_index: the next index to query with. That should be the index of
         the first item after the last item on the current page.
         page_size: the current page size
         data: the actual page of the dataset
         """
-        assert isinstance(index, int) and index >= 0 and index < len(self.indexed_dataset())
+        assert isinstance(index, int)
+        assert index >= 0 and index < len(self.indexed_dataset())
         assert isinstance(page_size, int) and page_size >= 0
 
         next_index = index + page_size
