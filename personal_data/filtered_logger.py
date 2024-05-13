@@ -57,6 +57,7 @@ PII_FIELDS = ('name', 'email', 'phone', 'ssn', 'password')
 the fields from user_data.csv that are considered PII. PII_FIELDS can contain
 only 5 fields"""
 
+
 def get_logger() -> logging.Logger:
     """ Implement a get_logger function that takes no arguments and
     returns a logging.Logger object.
