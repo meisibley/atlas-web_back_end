@@ -25,6 +25,7 @@ def filter_datum(fields: List[str], redaction: str, message: str,
             log[i] = re.sub(field + '=.*', field + '=' + redaction, log[i])
     return separator.join(log)
 
+
 class RedactingFormatter(logging.Formatter):
     """ Redacting Formatter class
         """
@@ -47,6 +48,5 @@ class RedactingFormatter(logging.Formatter):
                             super().format(record), self.SEPARATOR)
         """
         record.msg = filter_datum(self.fields, self.REDACTION,
-                                      record.msg, self.SEPARATOR)
+                                  record.msg, self.SEPARATOR)
         return super().format(record)
-    
