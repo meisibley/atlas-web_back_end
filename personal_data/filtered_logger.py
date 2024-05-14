@@ -12,6 +12,8 @@ substitution with a single regex."""
 import logging
 import re
 from typing import List
+import os
+import mysql.connector
 
 
 def filter_datum(fields: List[str], redaction: str, message: str,
@@ -72,3 +74,16 @@ def get_logger() -> logging.Logger:
     handler.setFormatter(RedactingFormatter(PII_FIELDS))
     logger.addHandler(handler)
     return logger
+
+
+def get_db() -> mysql.connector.connection.MySQLConnection:
+    """ Implement a get_db function that returns a connector to the database
+    (mysql.connector.connection.MySQLConnection object).
+    Use the os module to obtain credentials from the environment
+    Use the module mysql-connector-python to connect to the MySQL database
+    (pip3 install mysql-connector-python)"""
+    return mysql.connector.connect(
+        host=os.environ.get('PERSONAL_DATA_DB_HOST', 'localhost'),
+        database=os.environ.get('PERSONAL_DATA_DB_NAME', 'root'),
+        user=os.environ.get('PERSONAL_DATA_DB_USERNAME'),
+        password=os.environ.get('PERSONAL_DATA_DB_PASSWORD', ''))
