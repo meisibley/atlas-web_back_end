@@ -24,7 +24,7 @@ class Auth:
         if not request.header.get('Authorization'):
             return None
         return request.header.get('Authorization')
-    
+
     def current_user(self, request=None) -> TypeVar('User'):
         """ public method def current_user(self, request=None) ->
         TypeVar('User'): that returns None - request will be the Flask
