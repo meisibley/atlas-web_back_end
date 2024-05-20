@@ -41,10 +41,26 @@ def forbidden(error) -> str:
 
 @app.before_request
 def before_request() -> str:
-    """ use the Flask method before_request """
+    """ use the Flask method before_request 
+    if auth is None, do nothing
+    if request.path is not part of this list
+    ['/api/v1/status/', '/api/v1/unauthorized/', '/api/v1/forbidden/'],
+    do nothing - you must use the method require_auth from the auth instance
+    if auth.authorization_header(request) returns None, raise the error 401
+    - you must use abort
+    if auth.current_user(request) returns None, raise the error 403
+    - you must use abort"""
     if auth is None:
+        return 
+    if request.path not in \
+        ['/api/v1/status/', '/api/v1/unauthorized/', '/api/v1/forbidden/']:
         return
-    
+    if auth.authorization_header(request) is None:
+        abort(401)
+    if auth.current_user(request) is None:
+        abort(403)
+
+  
 if __name__ == "__main__":
     host = getenv("API_HOST", "0.0.0.0")
     port = getenv("API_PORT", "5000")
