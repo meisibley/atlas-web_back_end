@@ -50,7 +50,7 @@ class Auth:
         """ returns a cookie value from a request:
         Return None if request is None
         Return the value of the cookie named _my_session_id from request
-        - the name of the cookie must be defined by the environment 
+        - the name of the cookie must be defined by the environment
         variable SESSION_NAME
         You must use .get() built-in for accessing the cookie in the request
         cookies dictionary
