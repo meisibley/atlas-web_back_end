@@ -58,9 +58,12 @@ def before_request() -> str:
     - you must use abort"""
     if auth is None:
         return
+    """ Add the URL path /api/v1/auth_session/login/ in the list of excluded
+    paths of the method require_auth """
     excluded_paths = ['/api/v1/status/',
                       '/api/v1/unauthorized/',
-                      '/api/v1/forbidden/']
+                      '/api/v1/forbidden/',
+                      '/api/v1/auth_session/login']
     request.current_user = auth.current_user(request)
     if not auth.require_auth(request.path, excluded_paths):
         return
@@ -68,6 +71,10 @@ def before_request() -> str:
         abort(401)
     if auth.current_user(request) is None:
         abort(403)
+    if auth.authorization_header(request):
+        return None
+    if auth.session_cookie(request):
+        abort(401)
 
 
 if __name__ == "__main__":
