@@ -56,3 +56,23 @@ class SessionAuth(Auth):
         _my_session_id = self.session_cookie(request)
         user_id = self.user_id_for_session_id(_my_session_id)
         return User.get(user_id)
+
+    def destroy_session(self, request=None):
+        """ deletes the user session / logout:
+        If the request is equal to None, return False
+        If the request doesn’t contain the Session ID cookie, return False
+        - you must use self.session_cookie(request)
+        If the Session ID of the request is not linked to any User ID,
+        return False - you must use self.user_id_for_session_id(...)
+        Otherwise, delete in self.user_id_by_session_id the Session ID
+        (as key of this dictionary) and return True """
+        if request is None:
+            return False
+        session_id = self.session_cookie(request)
+        if session_id is None:
+            return False
+        user_id = self.user_id_for_session_id(session_id)
+        if user_id is None:
+            return False
+        del self.user_id_for_session_id[session_id]
+        return True
