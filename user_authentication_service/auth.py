@@ -34,3 +34,15 @@ class Auth:
             hashed_pwd = _hash_password(password)
             save_user = self._db.add_user(email, hashed_pwd)
             return save_user
+
+    def valid_login(self, email: str, password: str) -> bool:
+        """ Try locating the user by email. If it exists, check the password
+        with bcrypt.checkpw. If it matches return True. In any other case,
+        return False.
+        """
+        try:
+            found_user = self._db.find_user_by(email=email)
+            return bcrypt.checkpw(bytes(password, "ascii"),
+                                  found_user.hashed_password)
+        except NoResultFound:
+            return False
