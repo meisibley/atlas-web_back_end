@@ -50,3 +50,16 @@ class DB:
         if got_key is None:
             raise NoResultFound()
         return got_key
+
+    def update_user(self, user_id: int, **kwargs: dict):
+        """ method that takes as argument a required user_id integer and
+        arbitrary keyword arguments, and returns None.
+        """
+        got_user = self.find_user_by(id=user_id)
+        for key in kwargs.keys():
+            if key not in list(got_user.__dict__.keys()):
+                raise ValueError
+        for key, value in kwargs.items():
+            setattr(got_user, key, value)
+        self._session.add(got_user)
+        self._session.commit()
