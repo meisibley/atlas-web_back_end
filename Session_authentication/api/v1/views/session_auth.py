@@ -39,7 +39,7 @@ def sess_auth() -> str:
 
 @app_views.route('/auth_session/logout',
                  methods=['DELETE'], strict_slashes=False)
-def sess_auth_del() -> str:
+def delete_session() -> str:
     """ deleting the Session ID contains in the request as cookie """
     from api.v1.app import auth
     session_id = request.cookies.get(SESSION_NAME)
