@@ -23,7 +23,7 @@ def sess_auth() -> str:
     for each_user in users:
         if not each_user.is_valid_password(password):
             return jsonify({"error": "wrong password"}), 401
-    
+
     from api.v1.app import auth
     session_id = auth.create_session(users[0].id)
     user_id = auth.user_id_for_session_id(session_id)
@@ -31,5 +31,5 @@ def sess_auth() -> str:
     user_dict = jsonify(user.to_json())
     SESSION_NAME = getenv("SESSION_NAME")
     user_dict.set_cookie(SESSION_NAME, session_id)
-    
+
     return user_dict
