@@ -38,3 +38,15 @@ class DB:
         self._session.add(add_usr)
         self._session.commit()
         return add_usr
+
+    def find_user_by(self, **kwargs) -> User:
+        """ takes in arbitrary keyword arguments and returns the first row
+        found in the users table as filtered by the method’s input arguments.
+        No validation of input arguments required at this point."""
+        for key in kwargs.keys():
+            if key not in User.__table__.columns:
+                raise InvalidRequestError()
+        got_key = self._session.query(User).filter_by(**kwargs).one_or_none()
+        if got_key is None:
+            raise NoResultFound()
+        return got_key
