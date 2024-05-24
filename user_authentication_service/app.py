@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """ a Flask app """
-from flask import Flask, jsonify, request, abort
+from flask import Flask, jsonify, request, abort, redirect
 from auth import Auth
 
 
@@ -48,6 +48,19 @@ def login() -> str:
     response = jsonify({"email": email, "message": "logged in"})
     response.set_cookie("session_id", session_id)
     return response
+
+
+@app.route("/sessions", methods=["DELETE"])
+def logout():
+    """ Find the user with the requested session ID. If the user exists
+    destroy the session and redirect the user to GET /. If the user does not
+    exist, respond with a 403 HTTP status."""
+    session_id = request.cookies.get("session_id")
+    user = AUTH.get_user_from_session_id(session_id)
+    if not user or not session_id:
+        abort(403)
+    AUTH.destroy_session(user.id)
+    return redirect("/")
 
 
 if __name__ == "__main__":
