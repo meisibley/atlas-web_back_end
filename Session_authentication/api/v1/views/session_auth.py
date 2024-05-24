@@ -37,10 +37,10 @@ def sess_auth() -> str:
 
 @app_views.route('/auth_session/logout',
                  methods=['DELETE'], strict_slashes=False)
-def delete_session() -> str:
+def sess_auth_delet():
     """ deleting the Session ID contains in the request as cookie """
     from api.v1.app import auth
     delete_sess = auth.destroy_session(request)
-    if delete_sess is None:
-        abort(404)
-    return jsonify({}), 200
+    if delete_sess:
+        return jsonify({}), 200
+    abort(404)
