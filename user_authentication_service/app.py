@@ -25,12 +25,12 @@ def users():
     If the user is already registered, catch the exception and return a JSON
     payload of the form and return a 400 status code"""
     email = request.form.get('email')
-    password = request.form.get('passoword')
+    password = request.form.get('password')
     try:
         AUTH.register_user(email, password)
         return jsonify({'email': email, 'message': 'user created'})
     except ValueError:
-        return jsonify({"message": "email already registered"}), 400
+        return jsonify({'message': 'email already registered'}), 400
 
 
 if __name__ == "__main__":
