@@ -92,6 +92,7 @@ def get_reset_password_token():
     except ValueError:
         abort(403)
 
+
 @app.route("/reset_password", methods=["PUT"])
 def update_password():
     """ The request is expected to contain form data with fields "email",
