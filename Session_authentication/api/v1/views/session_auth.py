@@ -7,9 +7,6 @@ from api.v1.views import app_views
 from os import getenv
 
 
-SESSION_NAME = getenv("SESSION_NAME")
-
-
 @app_views.route('/auth_session/login', methods=['POST'], strict_slashes=False)
 def sess_auth() -> str:
     """ POST /api/v1/auth_session/login
@@ -32,6 +29,7 @@ def sess_auth() -> str:
     user_id = auth.user_id_for_session_id(session_id)
     user = User.get(user_id)
     user_dict = jsonify(user.to_json())
+    SESSION_NAME = getenv("SESSION_NAME")
     user_dict.set_cookie(SESSION_NAME, session_id)
 
     return user_dict
@@ -42,8 +40,7 @@ def sess_auth() -> str:
 def delete_session() -> str:
     """ deleting the Session ID contains in the request as cookie """
     from api.v1.app import auth
-    session_id = request.cookies.get(SESSION_NAME)
-    if session_id is None:
+    delete_sess = auth.destroy_session(request)
+    if delete_sess is None:
         abort(404)
-    auth.destroy_session(request)
     return jsonify({}), 200
