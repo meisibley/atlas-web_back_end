@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """ class SessionAuth that inherits from Auth """
 from api.v1.auth.auth import Auth
-import uuid
 from models.user import User
+import uuid
+from os import getenv
 
 
 class SessionAuth(Auth):
@@ -68,11 +69,11 @@ class SessionAuth(Auth):
         (as key of this dictionary) and return True """
         if request is None:
             return False
-        session_id = self.session_cookie(request)
-        if session_id is None:
+        _my_session_id = self.session_cookie(request)
+        if _my_session_id is None:
             return False
-        user_id = self.user_id_for_session_id(session_id)
+        user_id = self.user_id_for_session_id(_my_session_id)
         if user_id is None:
             return False
-        del self.user_id_for_session_id[session_id]
+        del self.user_id_by_session_id[_my_session_id]
         return True
