@@ -90,3 +90,16 @@ class Auth:
                 return reset_token
         except Exception:
             raise ValueError()
+
+    def update_password(self, reset_token: str, password: str) -> None:
+        """ Use the reset_token to find the corresponding user. If it does not
+        exist, raise a ValueError exception. Otherwise, hash the password and
+        update the user’s hashed_password field with the new hashed password
+        and the reset_token field to None. """
+        try:
+            user = self._db.find_user_by(reset_token=reset_token)
+            if user:
+                user.hashed_password = _hash_password(password)
+                self._db.update_user(user.id, reset_token=None)
+        except Exception:
+            raise ValueError()
