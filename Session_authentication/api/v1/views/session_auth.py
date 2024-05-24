@@ -42,5 +42,5 @@ def sess_auth_delet():
     from api.v1.app import auth
     delete_sess = auth.destroy_session(request)
     if delete_sess:
-        return jsonify({}), 200
+        return (jsonify({}), 200)
     abort(404)
