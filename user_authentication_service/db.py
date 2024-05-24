@@ -38,4 +38,3 @@ class DB:
         self._session.add(add_usr)
         self._session.commit()
         return add_usr
-        
