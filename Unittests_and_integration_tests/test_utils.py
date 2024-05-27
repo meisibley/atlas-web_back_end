@@ -5,11 +5,12 @@ Create a TestAccessNestedMap class that inherits from
 unittest.TestCase.
 """
 import unittest
+from unittest import TestCase
 from utils import access_nested_map
 from parameterized import parameterized
 
 
-class TestAccessNextedMap(unittest.TestCase):
+class TestAccessNextedMap(TestCase):
     """ Implement the TestAccessNestedMap.test_access_nested_map method to
     test that the method returns what it is supposed to.
     Decorate the method with @parameterized.expand to test the function for
