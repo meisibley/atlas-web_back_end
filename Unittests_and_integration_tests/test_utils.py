@@ -4,10 +4,9 @@ utils.access_nested_map.
 Create a TestAccessNestedMap class that inherits from
 unittest.TestCase.
 """
-import unittest
-from unittest import TestCase
+from unittest import TestCase, mock
 from parameterized import parameterized
-from utils import access_nested_map
+from utils import access_nested_map, get_json
 
 
 class TestAccessNestedMap(TestCase):
@@ -41,3 +40,18 @@ class TestAccessNestedMap(TestCase):
         nested_map={"a": 1}, path=("a", "b")
         """
         self.assertRaises(KeyError, access_nested_map, map, path)
+
+
+class TestGetJson(TestCase):
+    """ inherits class unittest.TestCase """
+    @parameterized.expand([
+        ("http://example.com", {"payload": True}),
+        ("http://holberton.io", {"payload": False}),
+    ])
+    @mock.patch('test_utils.get_json')
+    def test_get_json(self, test_url, test_payload, mock_get_json):
+        """ implement this method to test that utils.get_json returns
+        the expected result.
+        """
+        mock_get_json.return_value = test_payload
+        self.assertEqual(get_json(test_url), test_payload)
