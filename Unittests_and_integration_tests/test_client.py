@@ -5,6 +5,9 @@ from unittest import mock
 from client import GithubOrgClient
 from unittest.mock import patch, PropertyMock
 from parameterized import parameterized
+from parameterized import parameterized_class
+from urllib.error import HTTPError
+from fixtures import TEST_PAYLOAD
 
 
 class TestGithubOrgClient(unittest.TestCase):
@@ -55,3 +58,22 @@ class TestGithubOrgClient(unittest.TestCase):
         test_client = GithubOrgClient("atlas")
         test_return = test_client.has_license(repo, license_key)
         self.assertEqual(test_return, expected_result)
+
+
+@parameterized_class(
+    ("org_payload", "repos_payload", "expected_repos", "apache2_repos"),
+    TEST_PAYLOAD
+)
+class TestIntegrationGithubOrgClient(unittest.TestCase):
+    """ a child class of unittest.TestCase
+    integration test for public_repos method
+    contents classmethods setUpClass and tearDownClass """
+    @classmethod
+    def setUpClass(cls):
+        """ setup patch """
+        cls.my_patch = patch("requests.get", side_effect=HTTPError)
+
+    @classmethod
+    def tearDownClass(cls):
+        """ tear down patch """
+        cls.my_patch.stop()
