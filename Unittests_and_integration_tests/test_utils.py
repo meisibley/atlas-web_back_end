@@ -5,8 +5,9 @@ Create a TestAccessNestedMap class that inherits from
 unittest.TestCase.
 """
 from unittest import TestCase, mock
+from unittest.mock import patch
 from parameterized import parameterized
-from utils import access_nested_map, get_json
+from utils import access_nested_map, get_json, memoize
 
 
 class TestAccessNestedMap(TestCase):
@@ -55,3 +56,26 @@ class TestGetJson(TestCase):
         """
         mock_get_json.return_value = test_payload
         self.assertEqual(get_json(test_url), test_payload)
+
+
+class TestMemoize(TestCase):
+    """ test utils.memoize """
+    def test_memoize(self):
+        """ Use unittest.mock.patch to mock a_method. Test that when calling
+        a_property twice, the correct result is returned but a_method is only
+        called once using assert_called_once."""
+        class TestClass:
+            """ memoization """
+            def a_method(self):
+                """ a mock method """
+                return 42
+
+            @memoize
+            def a_property(self):
+                """ a mock property get a_method value """
+                return self.a_method()
+        with mock.patch.object(TestClass, 'a_method') as mock_a_method:
+            test_class = TestClass()
+            test_class.a_property
+            test_class.a_property
+            mock_a_method.assert_called_once()
