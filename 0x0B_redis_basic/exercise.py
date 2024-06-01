@@ -26,7 +26,7 @@ def call_history(method: Callable) -> Callable:
     key = method.__qualname__
     inputs = key + ":inputs"
     outputs = key + ":outputs"
-    
+
     @wraps(method)
     def wrapper(self, *args, **kwargs):
         """ Execute the wrapped function to retrieve the output. Store the
@@ -38,7 +38,7 @@ def call_history(method: Callable) -> Callable:
         return data
     return wrapper
 
-        
+
 class Cache():
     """ class Cache """
     def __init__(self):
@@ -82,6 +82,7 @@ class Cache():
         function
         """
         return self.get(key, int)
+
 
 def replay(method: Callable) -> Callable:
     """ display the history of calls of a particular function """
