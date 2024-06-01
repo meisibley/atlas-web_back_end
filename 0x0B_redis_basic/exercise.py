@@ -2,7 +2,7 @@
 """ Exercise Redis basic """
 import redis
 import uuid
-from typing import Union
+from typing import Union, Callable
 
 
 class Cache():
@@ -23,3 +23,26 @@ class Cache():
         key = str(uuid.uuid4())
         self._redis.set(key, data)
         return key
+
+    def get(self, key: str, fn: Callable[[bytes], str] = None) -> str:
+        """ take a key string argument and an optional Callable argument
+        named fn. This callable will be used to convert the data back to
+        the desired format. conserve the original Redis.get behavior if the
+        key does not exist. return data stored in Redis
+        """
+        data = self._redis.get(key)
+        if fn:
+            return fn(data)
+        return data
+
+    def get_str(self, key: str) -> str:
+        """ automatically parametrize Cache.get with the correct conversion
+        function
+        """
+        return self.get(key, str)
+
+    def get_int(self, key: int) -> int:
+        """ automatically parametrize Cache.get with the correct conversion
+        function
+        """
+        return self.get(key, int)
