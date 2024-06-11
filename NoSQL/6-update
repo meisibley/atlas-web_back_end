@@ -5,7 +5,7 @@
 // The update should add the attribute address with the value “972 Mission
 // street”
 db.school.update(
-    { "name" : "Holberton school" },
-    { $set : { "address" : “972 Mission street" } },
+    { "name": "Holberton school" },
+    { $set : { "address": “972 Mission street" } },
     { multi:true }
 )
