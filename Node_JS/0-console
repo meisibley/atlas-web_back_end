@@ -1,0 +1,5 @@
+function displayMessage(str) {
+    //function prints in STDOUT the string argument
+    console.log(str);
+}
+module.exports = displayMessage;
