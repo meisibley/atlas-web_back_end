@@ -19,6 +19,7 @@ function countStudents(path) {
     //filter only gets CS or SWE students, and get their firstname (first item in the array [0])
     CSlist = CSlist.join(', ');
     SWElist = SWElist.join(', ');
+    //Joins the extracted names into comma-separated lists using join
     console.log(`Number of students in CS: ${CScount}. List: ${CSlist}`);
     console.log(`Number of students in SWE: ${SWEcount}. List: ${SWElist}`);
 }
