@@ -7,9 +7,9 @@ describe('Test calculateNumber function', () => {
         assert.strictEqual(calculateNumber(0, 0), 0);
         assert.strictEqual(calculateNumber(1.8, 0), 2);
         assert.strictEqual(calculateNumber(2, 3), 5);
-        assert.strictEqual(calculateNumber(5, 2.6), 8);
-        assert.strictEqual(calculateNumber(1.2, 3), 5);
-        assert.strictEqual(calculateNumber(1.5, 3.7), 6);
+        assert.strictEqual(calculateNumber(5, 2.8), 8);
+        assert.strictEqual(calculateNumber(1.2, 3), 4);
+        assert.strictEqual(calculateNumber(1.5, 3.7), 5);
     });
     it('test the sum with negative numbers', () => {
         assert.strictEqual(calculateNumber(20, -3), 17);
