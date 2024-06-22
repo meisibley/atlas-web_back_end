@@ -16,4 +16,4 @@ const Utils = {
         return 'Wrong type of operator';
     }
 }
-module.export = Utils;
+module.exports = Utils;
