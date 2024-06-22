@@ -44,7 +44,6 @@ describe('Deep equality & Post integration testing', () => {
       //chai.expect(data.paymentmethods).to.deep.equal({
       //creditcards: false,
       //paypal: true,
-    });
       done();
     });
   });
