@@ -1,5 +1,5 @@
 const chai = require('chai');
-const calculateNumber = require('./2-calcul_char.js');
+const calculateNumber = require('./2-calcul_chai.js');
 
 describe('calculateNumber', () => {
     it('SUM, it round the first argument', () => {
