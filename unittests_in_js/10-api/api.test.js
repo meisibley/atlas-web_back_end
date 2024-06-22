@@ -37,14 +37,14 @@ describe('Deep equality & Post integration testing', () => {
   it('GET /available_payments returns expected info', function (done) {
     request('http://localhost:7865/available_payments', function (error, response, body) {
       chai.expect(response.statusCode).to.equal(200);
-    //   chai.expect(response.headers['content-type']).to.include('./package.json');
-    //   const data = JSON.parse(body);
-    //   chai.expect(data).to.have.property('payment_methods');
-    //   chai.expect(data.payment_methods).to.be.an('object');
-    //   chai.expect(data.payment_methods).to.deep.equal({
-    //     credit_cards: true,
-    //     paypal: false,
-    //   });
+      chai.expect(response.headers['content-type']).to.include('application/json');
+      const data = JSON.parse(body);
+      chai.expect(data).to.have.property('paymentmethods');
+      chai.expect(data.paymentmethods).to.be.an('object');
+      chai.expect(data.paymentmethods).to.deep.equal({
+      creditcards: false,
+      paypal: true,
+    });
       done();
     });
   });
@@ -67,8 +67,8 @@ describe('Deep equality & Post integration testing', () => {
     };
     request(options, function (error, response, body) {
       chai.expect(response.statusCode).to.equal(200);
-    //   chai.expect(response.headers['content-type']).to.include('text/plain');
-    //   chai.expect(body).to.equal(`Welcome ${loginData.userName}`);
+      chai.expect(response.headers['content-type']).to.include('text/plain');
+      chai.expect(body).to.equal(`Hello ${loginData.userName}`);
       done();
     });
   });
