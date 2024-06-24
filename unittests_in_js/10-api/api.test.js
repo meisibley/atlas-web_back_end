@@ -67,7 +67,6 @@ describe('Deep equality & Post integration testing', () => {
     };
     request(options, function (error, response, body) {
       chai.expect(response.statusCode).to.equal(200);
-      //chai.expect(response.headers['content-type']).to.include('text/plain');
       chai.expect(body).to.equal(`Welcome ${loginData.userName}`);
       done();
     });
