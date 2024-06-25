@@ -2,6 +2,7 @@ import { createClient } from 'redis';
 
 const redisClient = createClient();
 const redis = require('redis');
+
 redisClient.on('Connected', () =>
     console.log('Redis client connected to the server'));
 redisClient.on('error', (err) =>
