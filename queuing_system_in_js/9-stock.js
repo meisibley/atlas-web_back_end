@@ -30,8 +30,16 @@ const listProducts = [
   
   const express = require('express');
   const app = express();
-  const port = 1245;
+    
+  async function reserveStockById(itemId, stock) {
+    await setAsync(`item:${itemId}`, stock);
+  }
   
+  async function getCurrentReservedStockById(itemId) {
+    const reservedStock = await getAsync(`item.${itemId}`);
+    return reservedStock ? parseInt(reservedStock, 10) : null;
+  }
+
   app.get('/list_products', (req, res) => {
     const products = listProducts.map(product => ({
       itemId: product.id,
@@ -43,23 +51,41 @@ const listProducts = [
   });
   
   app.get('/list_products/:itemId', async (req, res) => {
-    const stockId = req.params.itemId
-    const product = getItemById(stockId);
+    const itemId = req.params.itemId
+    const product = getItemById(itemId);
     if (!product) {
       res.json({status: "Product not found"})
     }
-    const currentQuanity = await getCurrentReservedStockById(itemId) ?? product.stock;
+    const getCurrentQuantity = await getCurrentReservedStockById(itemId);
+    const currentQuantity = getCurrentQuantity !== null ? getCurrentQuantity : product.stock;
     res.json({
       itemId: product.id,
       itemName: product.name,
       price: product.price,
       initialAvailableQuantity: product.stock,
-      currentQuanity: currentQuanity
+      currentQuantity: currentQuantity
     })
   })
   
-  app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}/`);
+  app.get('/reserve_product/:itemId', async (req, res) => {
+    const stockId = req.params.itemId
+    const product = getItemById(stockId);
+    if (!product) {
+        res.json({ status: 'Product not found' });
+        return;
+    }
+    const getCurrentStock = await getCurrentReservedStockById(stockId);
+    const currentQuantity = getCurrentStock !== null ? getCurrentStock : product.stock;
+    if (currentQuantity <= 0) {
+        res.json({ status: 'Not enough stock available', stockId });
+        return;
+    }
+    await reserveStockById(stockId, currentQuantity - 1);
+    res.json({ status: 'Reservation confirmed', stockId });
+  });
+
+  app.listen(1245, () => {
+    console.log('Server running at http://localhost:1245/');
   });
   
   import redis from 'redis';
@@ -76,13 +102,3 @@ const listProducts = [
   client.on('error', (err) => {
     console.log('Redis client not connected to the server: ' + err);
   });
-  
-  async function reserveStockById(itemId, stock) {
-    await setAsync(`item:${itemId}`, stock);
-  }
-  
-  async function getCurrentReservedStockById(itemId) {
-    const reservedStock = await getAsync(`item:${itemId}`);
-    return parseInt(reservedStock) || null;
-  }
-  
